@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --background: 9 13 39;
-  --surface: 13 20 54;
-  --surface-elevated: 18 27 69;
-  --border: 32 44 102;
-  --primary: 165 40 52;
-  --primary-hover: 140 30 45;
-  --electric: 0 255 247;
-  --foreground: 224 224 224;
-  --secondary-foreground: 160 160 160;
+  --background: 7 11 28;
+  --surface: 12 18 46;
+  --surface-elevated: 17 25 61;
+  --border: 48 62 132;
+  --primary: 214 68 88;
+  --primary-hover: 188 52 74;
+  --electric: 95 255 224;
+  --foreground: 236 240 255;
+  --secondary-foreground: 166 177 212;
 }
 
 html,
@@ -22,34 +22,67 @@ body {
 
 body {
   @apply bg-background text-foreground antialiased;
-  font-family: Roboto, ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background-image:
+    radial-gradient(1200px 520px at 8% -10%, rgb(var(--electric) / 0.12), transparent 60%),
+    radial-gradient(900px 420px at 100% 0%, rgb(var(--primary) / 0.18), transparent 62%),
+    linear-gradient(180deg, rgb(7 11 28), rgb(6 9 24));
 }
 
 .bg-grid {
-  background-image: linear-gradient(to right, rgb(var(--border) / 0.28) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(var(--border) / 0.28) 1px, transparent 1px);
-  background-size: 38px 38px;
+  background-image:
+    linear-gradient(to right, rgb(var(--border) / 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--border) / 0.22) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
 .bg-strike-canvas {
   background-image:
-    radial-gradient(700px 280px at 10% 2%, rgb(var(--electric) / 0.08), transparent 65%),
-    radial-gradient(820px 320px at 88% -5%, rgb(var(--primary) / 0.2), transparent 62%),
-    linear-gradient(180deg, rgb(var(--surface) / 0.5), transparent 42%);
+    radial-gradient(740px 320px at 8% 0%, rgb(var(--electric) / 0.07), transparent 68%),
+    radial-gradient(860px 340px at 92% -5%, rgb(var(--primary) / 0.24), transparent 60%),
+    linear-gradient(180deg, rgb(var(--surface) / 0.42), transparent 45%);
 }
 
 .surface-panel {
   @apply rounded-xl border border-border bg-surface shadow-soft;
-  background-image: linear-gradient(150deg, rgb(var(--surface-elevated) / 0.3), rgb(var(--surface) / 0.96) 55%);
+  background-image: linear-gradient(150deg, rgb(var(--surface-elevated) / 0.52), rgb(var(--surface) / 0.96) 55%);
 }
 
 .surface-panel-elevated {
   @apply rounded-2xl border border-border bg-surfaceElevated shadow-layered;
-  background-image: linear-gradient(160deg, rgb(var(--surface-elevated) / 0.95), rgb(var(--surface) / 0.85) 65%, rgb(var(--surface) / 0.98));
+  background-image: linear-gradient(160deg, rgb(var(--surface-elevated) / 0.95), rgb(var(--surface) / 0.82) 65%, rgb(var(--surface) / 0.98));
 }
 
 .font-brand {
   font-family: Orbitron, Roboto, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.hero-glow {
+  position: relative;
+}
+
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  z-index: -1;
+  border-radius: 1rem;
+  background:
+    radial-gradient(56% 54% at 18% 26%, rgb(var(--electric) / 0.18), transparent 72%),
+    radial-gradient(58% 56% at 82% 72%, rgb(var(--primary) / 0.22), transparent 70%);
+  filter: blur(16px);
+}
+
+.cta-primary {
+  @apply rounded-md border border-primary/60 bg-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-primaryHover hover:shadow-soft;
+}
+
+.cta-ghost {
+  @apply rounded-md border border-border bg-surface/20 px-6 py-3 text-sm font-semibold text-foreground transition-all duration-200 hover:border-electric/50 hover:bg-surfaceElevated/60;
+}
+
+.chip {
+  @apply inline-flex items-center rounded-full border border-electric/40 bg-electric/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-electric;
 }
