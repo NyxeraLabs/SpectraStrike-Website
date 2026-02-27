@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     template: '%s | SpectraStrike'
   },
   description: siteConfig.description,
+  icons: {
+    icon: '/images/SpectraStrike_Logo.png',
+    shortcut: '/images/SpectraStrike_Logo.png',
+    apple: '/images/SpectraStrike_Logo.png'
+  },
   alternates: { canonical: '/' },
   openGraph: {
     title: 'SpectraStrike by NyxeraLabs',
