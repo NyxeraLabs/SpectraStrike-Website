@@ -112,7 +112,7 @@ jobs:
       - name: Create timestamp tag
         id: make_tag
         run: |
-          TAG="$(date -u +'%Y.%m.%d.%H%M')"
+          TAG="$(date -u +'%Y.%m.%d.%H%M').${GITHUB_RUN_NUMBER}"
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
           git tag "${TAG}"
 
