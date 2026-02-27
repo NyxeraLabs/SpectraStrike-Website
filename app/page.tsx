@@ -23,7 +23,7 @@ export default function Home() {
           </div>
           <div className="surface-panel-elevated p-3">
             <Image
-              src="/images/spectrastrike-hero.png"
+              src="/images/SpectraStrike_HERO.png"
               alt="SpectraStrike logo"
               width={1200}
               height={900}
