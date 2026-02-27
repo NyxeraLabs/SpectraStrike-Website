@@ -11,5 +11,7 @@ export const navItems = [
   { href: '#federation', label: 'Federation' },
   { href: '#tools', label: 'Tool Ecosystem' },
   { href: '#roadmap', label: 'Roadmap' },
+  { href: '/security', label: 'Security' },
+  { href: '/contact', label: 'Contact' },
   { href: '#github', label: 'GitHub' }
 ];
