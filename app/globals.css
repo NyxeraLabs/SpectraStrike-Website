@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 9 13 39;
+  --surface: 13 20 54;
+  --surface-elevated: 18 27 69;
+  --border: 32 44 102;
+  --primary: 165 40 52;
+  --primary-hover: 140 30 45;
+  --electric: 0 255 247;
+  --foreground: 224 224 224;
+  --secondary-foreground: 160 160 160;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  font-family: Roboto, ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+.bg-grid {
+  background-image: linear-gradient(to right, rgb(var(--border) / 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--border) / 0.28) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+.bg-strike-canvas {
+  background-image:
+    radial-gradient(700px 280px at 10% 2%, rgb(var(--electric) / 0.08), transparent 65%),
+    radial-gradient(820px 320px at 88% -5%, rgb(var(--primary) / 0.2), transparent 62%),
+    linear-gradient(180deg, rgb(var(--surface) / 0.5), transparent 42%);
+}
+
+.surface-panel {
+  @apply rounded-xl border border-border bg-surface shadow-soft;
+  background-image: linear-gradient(150deg, rgb(var(--surface-elevated) / 0.3), rgb(var(--surface) / 0.96) 55%);
+}
+
+.surface-panel-elevated {
+  @apply rounded-2xl border border-border bg-surfaceElevated shadow-layered;
+  background-image: linear-gradient(160deg, rgb(var(--surface-elevated) / 0.95), rgb(var(--surface) / 0.85) 65%, rgb(var(--surface) / 0.98));
+}
+
+.font-brand {
+  font-family: Orbitron, Roboto, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
