@@ -11,9 +11,14 @@ export function Header() {
           <div className="relative h-10 w-10 shrink-0 rounded-md border border-border/60 bg-surface/60 p-1 sm:h-12 sm:w-12">
             <Image src="/images/SpectraStrike_Logo.png" alt="SpectraStrike logo" fill className="object-contain" priority />
           </div>
-          <span className="truncate pl-1 text-xs font-semibold tracking-[0.08em] text-foreground sm:text-sm lg:pl-2">
-            SpectraStrike by Nyxera Labs
-          </span>
+          <div className="min-w-0 pl-1 lg:pl-2">
+            <p className="font-brand truncate text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground sm:text-xs lg:text-sm">
+              SpectraStrike
+            </p>
+            <p className="truncate text-[10px] uppercase tracking-[0.12em] text-secondary sm:text-[11px]">
+              Nyxera Labs
+            </p>
+          </div>
         </Link>
         <nav className="hidden items-center gap-5 lg:flex xl:gap-8">
           {navItems.map((item) => (
