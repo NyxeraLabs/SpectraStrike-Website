@@ -3,6 +3,41 @@ import { Container } from '@/components/container';
 import { SectionTitle } from '@/components/section-title';
 import { siteConfig } from '@/lib/site';
 
+const TOOL_COVERAGE = [
+  {
+    category: 'Discovery and Surface Mapping',
+    description: 'Asset, DNS, and external surface reconnaissance wrappers with standardized telemetry envelopes.',
+    tools: ['Amass', 'Subfinder', 'DNSX', 'Nmap', 'Masscan', 'TheHarvester', 'Katana', 'Nikto']
+  },
+  {
+    category: 'Web and Application Validation',
+    description: 'Web-layer probing and exploitation-assist wrappers for deterministic offensive validation.',
+    tools: ['FFUF', 'Gobuster', 'Nuclei', 'Burp Suite', 'SQLMap', 'Curl', 'Wget']
+  },
+  {
+    category: 'Identity and AD Operations',
+    description: 'Active Directory and identity attack-path wrappers aligned to attested execution policy.',
+    tools: ['BloodHound Collector', 'NetExec', 'CrackMapExec', 'Responder', 'RoadRecon']
+  },
+  {
+    category: 'Post-Exploitation and Lateral Movement',
+    description: 'Impacket and credential-operation wrappers with signed evidence emission.',
+    tools: ['Impacket PsExec', 'Impacket WMIExec', 'Impacket SMBExec', 'Impacket SecretsDump', 'Impacket NTLMRelayX', 'John the Ripper']
+  },
+  {
+    category: 'Cloud and Security Posture',
+    description: 'Cloud and posture wrappers for enterprise drift detection and control validation.',
+    tools: ['Prowler', 'ScoutSuite', 'CloudFox', 'Azure CLI Security Wrapper']
+  },
+  {
+    category: 'Access, C2, and Execution Fabric',
+    description: 'Operator access and command-and-control wrappers bound to policy and tenant trust context.',
+    tools: ['SSH', 'SCP', 'Netcat', 'Metasploit', 'Sliver', 'Mythic']
+  }
+];
+
+const TOTAL_WRAPPERS = TOOL_COVERAGE.reduce((count, group) => count + group.tools.length, 0);
+
 export default function Home() {
   return (
     <>
@@ -14,7 +49,7 @@ export default function Home() {
               SpectraStrike Operational Fabric for Attested Offensive Validation
             </h1>
             <p className="mt-5 max-w-3xl text-base leading-7 text-secondary sm:text-lg sm:leading-8">
-              SpectraStrike orchestrates nmap, metasploit, sliver, and firecracker-backed workflows, then emits signed and attested telemetry into VectorVue for continuous assurance.
+              SpectraStrike orchestrates a commercial wrapper ecosystem across recon, cloud, identity, and C2 operations, then emits signed and attested telemetry into VectorVue for continuous assurance.
             </p>
             <div className="mt-6 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-secondary">
               <span className="rounded-full border border-border/70 bg-surface/60 px-3 py-1">Attested Runtime</span>
@@ -47,7 +82,7 @@ export default function Home() {
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {[
               'Orchestrator + policy-bound tasking',
-              'Wrapper execution contracts (nmap, metasploit, sliver, firecracker)',
+              'Wrapper execution contracts across recon, cloud, identity, and C2',
               'Canonical telemetry + execution fingerprinting'
             ].map((text, index) => (
               <article key={text} className="surface-panel p-6 transition-transform duration-200 hover:-translate-y-1">
@@ -76,12 +111,24 @@ export default function Home() {
 
       <section id="tools" className="border-b border-border/80 py-12 sm:py-16 lg:py-20">
         <Container>
-          <SectionTitle eyebrow="Tool Ecosystem" title="Operator Toolchain Coverage" />
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {['Nmap', 'Metasploit', 'Sliver', 'Firecracker MicroVM'].map((tool) => (
-              <article key={tool} className="surface-panel p-6 transition-transform duration-200 hover:-translate-y-1">
-                <h3 className="text-lg font-semibold text-foreground">{tool}</h3>
-                <p className="mt-2 text-secondary">Integrated through normalized wrapper contracts and telemetry SDK emission paths.</p>
+          <SectionTitle
+            eyebrow="Tool Ecosystem"
+            title="Operator Toolchain Coverage"
+          >
+            {TOTAL_WRAPPERS} production wrappers are integrated through normalized execution contracts, signed telemetry emission, and policy-bound runtime controls. Firecracker MicroVM is available as an isolated execution substrate for high-assurance workloads.
+          </SectionTitle>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {TOOL_COVERAGE.map((group) => (
+              <article key={group.category} className="surface-panel p-6 transition-transform duration-200 hover:-translate-y-1">
+                <h3 className="text-lg font-semibold text-foreground">{group.category}</h3>
+                <p className="mt-2 text-secondary">{group.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {group.tools.map((tool) => (
+                    <span key={tool} className="rounded-full border border-border/70 bg-surface/60 px-3 py-1 text-xs font-medium text-secondary">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
               </article>
             ))}
           </div>
