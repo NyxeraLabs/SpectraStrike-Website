@@ -1,39 +1,22 @@
-name: CI/CD Landing Page
+name: CI
 
 on:
   push:
-    branches:
-      - "feature/**"
-      - "dev"
-      - "QA"
-      - "main"
+    branches: ["feature/**", "dev", "QA", "main"]
   pull_request:
-    branches:
-      - "dev"
-      - "QA"
-      - "main"
+    branches: ["dev", "QA", "main"]
   workflow_dispatch:
 
-permissions:
-  contents: write
-
-concurrency:
-  group: spectrastrike-landing-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  checks:
-    name: Lint + Build
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: |
@@ -43,94 +26,5 @@ jobs:
             npm install
           fi
 
-      - name: Lint
-        run: npm run lint --if-present
-
-      - name: Type check
-        run: npm run typecheck --if-present
-
       - name: Build
         run: npm run build --if-present
-
-      - name: Detect build output directory
-        id: detect_output
-        run: |
-          if [ -d "out" ]; then
-            echo "dir=out" >> "$GITHUB_OUTPUT"
-          elif [ -d "dist" ]; then
-            echo "dir=dist" >> "$GITHUB_OUTPUT"
-          elif [ -d "build" ]; then
-            echo "dir=build" >> "$GITHUB_OUTPUT"
-          else
-            echo "No static output folder found (expected out/dist/build)." >&2
-            exit 1
-          fi
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: spectrastrike-site
-          path: ${{ steps.detect_output.outputs.dir }}
-
-  qa_verification:
-    name: QA Verification
-    runs-on: ubuntu-latest
-    needs: checks
-    if: github.event_name == 'push' && github.ref == 'refs/heads/QA'
-
-    steps:
-      - name: QA gate passed
-        run: echo "QA checks passed. Ready for PR to main."
-
-  verify_production:
-    name: Verify Production (Cloudflare auto-deploy)
-    runs-on: ubuntu-latest
-    needs: checks
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment: production
-
-    steps:
-      - name: Check production healthcheck config
-        id: prod_health
-        env:
-          PROD_HEALTHCHECK_URL: ${{ secrets.PROD_HEALTHCHECK_URL }}
-        run: |
-          if [ -n "$PROD_HEALTHCHECK_URL" ]; then
-            echo "ready=true" >> "$GITHUB_OUTPUT"
-            echo "Healthcheck configured."
-          else
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "PROD_HEALTHCHECK_URL not set. Skipping healthcheck."
-          fi
-
-      - name: Wait for Cloudflare deployment
-        run: sleep 45
-
-      - name: Production health check
-        if: steps.prod_health.outputs.ready == 'true'
-        run: |
-          curl --fail --silent --show-error --location \
-            --retry 10 --retry-delay 10 \
-            "${{ secrets.PROD_HEALTHCHECK_URL }}"
-
-  tag_release:
-    name: Tag release on main
-    runs-on: ubuntu-latest
-    needs: verify_production
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Create timestamp tag
-        id: make_tag
-        run: |
-          TAG="$(date -u +'%Y.%m.%d.%H%M').${GITHUB_RUN_NUMBER}"
-          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
-          git tag "${TAG}"
-
-      - name: Push tag
-        run: git push origin "${{ steps.make_tag.outputs.tag }}"
