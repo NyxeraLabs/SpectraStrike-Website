@@ -18,12 +18,15 @@ export function Footer() {
           <p className="tracking-[0.03em] text-foreground/90">SpectraStrike by NyxeraLabs — All Rights Reserved © {year}</p>
         </div>
         <div className="flex flex-wrap gap-4 text-xs sm:text-sm">
-          <a href={siteConfig.githubUrl} className="transition-colors hover:text-electric">GitHub</a>
           <a href="https://nyxera.cloud" className="transition-colors hover:text-electric">NyxeraLabs</a>
+          <a href="https://vectorvue.nyxera.cloud" className="transition-colors hover:text-electric">VectorVue</a>
+          <a href="https://docs.vectorvue.nyxera.cloud" className="transition-colors hover:text-electric">VectorVue Docs</a>
+          <a href="https://nexus.nyxera.cloud" className="transition-colors hover:text-electric">Nyxera Nexus</a>
+          <a href="https://docs.nexus.nyxera.cloud" className="transition-colors hover:text-electric">Nexus Docs</a>
           <a href="/security" className="transition-colors hover:text-electric">Security</a>
           <a href="/security-policy" className="transition-colors hover:text-electric">Responsible Disclosure</a>
           <a href="/contact" className="transition-colors hover:text-electric">Contact</a>
-          <a href="https://vectorvue.nyxera.cloud" className="transition-colors hover:text-electric">VectorVue</a>
+          <a href={siteConfig.githubUrl} className="transition-colors hover:text-electric">GitHub</a>
         </div>
       </Container>
     </footer>
